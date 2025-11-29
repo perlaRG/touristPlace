@@ -1,0 +1,112 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Ajustes</title>
+    <link rel="stylesheet" href="{% static 'nucleo/style.css' %}">
+    <style>
+        body {
+    margin: 0;
+    font-family: Arial, sans-serif;
+    background: #f2f2f2;
+        }
+
+        .container {
+            display: flex;
+            padding: 20px;
+            gap: 30px;
+        }
+
+        /* PANEL IZQUIERDO */
+        .menu {
+            background: #1c4260;
+            color: white;
+            padding: 20px;
+            width: 280px;
+            border-radius: 10px;
+        }
+
+        .menu h2 {
+            text-align: center;
+            margin-bottom: 20px;
+        }
+
+        .item {
+            display: block;
+            width: 100%;
+            padding: 12px;
+            margin-bottom: 10px;
+            background: #f6c23e;
+            border: none;
+            border-radius: 8px;
+            font-size: 15px;
+            cursor: pointer;
+            text-align: left;
+            font-weight: bold;
+            transition: 0.2s;
+        }
+
+        .item:hover {
+            background: #ffdb6d;
+        }
+
+        .cerrar {
+            background: #e63946;
+            color: white;
+        }
+
+        .cerrar:hover {
+            background: #ff7f7f;
+        }
+
+        /* PANEL DERECHO */
+        .descripcion {
+            background: white;
+            padding: 20px;
+            border-radius: 10px;
+            max-width: 650px;
+        }
+
+        .descripcion p {
+            margin-bottom: 12px;
+            font-size: 15px;
+            line-height: 1.4em;
+        }
+
+        /* RESPONSIVE */
+        @media (max-width: 800px) {
+            .container {
+                flex-direction: column;
+            }
+        }
+    </style>
+</head>
+<body>
+
+<div class="container">
+    <div class="menu">
+        <h2>AJUSTES</h2>
+
+        <button class="item">CONF. USUARIO</button>
+        <button class="item">ACCESIBILIDAD</button>
+        <button class="item">CUENTA</button>
+        <button class="item">INFORMACIÓN DE SITIOS</button>
+        <button class="item">AYUDA</button>
+        <button class="item">AJUSTES DE MAPA</button>
+        <button class="item">RASTREADOR</button>
+        <button class="item">NOTIFICACIONES</button>
+        <button class="item cerrar">CERRAR SESIÓN</button>
+    </div>
+
+    <div class="descripcion">
+        <p><strong>Conf. Usuario:</strong> Esta ventana será para que el usuario personalice su aplicación.</p>
+        <p><strong>Accesibilidad:</strong> Ayuda a las personas que no sepan usar la aplicación al 100%.</p>
+        <p><strong>Cuenta:</strong> Muestra los datos del usuario.</p>
+        <p><strong>Información de sitios:</strong> Aparecerá calificación y comentarios de los respectivos lugares.</p>
+        <p><strong>Ayuda:</strong> Resuelve dudas.</p>
+        <p><strong>Ajustes de mapa:</strong> Sirve para configurar el tamaño de la ventana.</p>
+        <p><strong>Rastreador:</strong> Permitirá saber tu ubicación en tiempo real.</p>
+        <p><strong>Notificaciones:</strong> Dará acceso al permiso de notificaciones.</p>
+        <p><strong>Cerrar sesión:</strong> Servirá para cerrar sesión y cambiar tu cuenta.</p>
