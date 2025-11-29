@@ -1,0 +1,28 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <title>Tourist Places - Iniciar Sesión</title>
+    <link rel="stylesheet" href="{% static 'nucleo/style.css' %}">
+</head>
+<body>
+
+<div class="container" style="text-align:center; margin-top:50px;">
+    <h1>Tourist Places</h1>
+    <h2>Iniciar Sesión</h2>
+
+    <form>
+        <label>Correo electrónico</label>
+        <input type="email">
+
+        <label>Contraseña</label>
+        <input type="password">
+
+        <a href="{% url 'nucleo:principal' %}" class="btn">Entrar</a>
+        <a href="{% url 'nucleo:registro' %}" class="btn btn-secondary">Crear cuenta</a>
+    </form>
+</div>
+
+</body>
+</html>
