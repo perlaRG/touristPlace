@@ -1,0 +1,112 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <title>Tourist Places</title>
+    <link rel="stylesheet" href="{% static 'nucleo/style.css' %}">
+    
+    <style>
+        /* Contenedor de los botones, fijo en la esquina */
+        .auth-buttons {
+            position: fixed;
+            top: 20px;
+            right: 20px;
+            z-index: 1000;
+            display: flex; /* Usamos flexbox para alinear los botones fácilmente */
+            gap: 10px;    /* Espacio entre los botones */
+        }
+
+        /* Estilo base para los enlaces (botones) */
+        .button {
+            text-decoration: none;
+            padding: 8px 12px;
+            border-radius: 5px;
+            font-weight: bold;
+            display: inline-block;
+            transition: background-color 0.3s ease, color 0.3s ease, border-color 0.3s ease;
+            font-size: 0.95em;
+        }
+
+        /* Estilo específico para el botón de Ajustes (Icono) */
+        .settings-btn {
+            background-color: transparent;
+            color: #333; /* Color oscuro para el ícono/texto */
+            border: 1px solid #ccc; /* Borde gris claro */
+            padding: 8px 10px; /* Ajuste para el ícono de engranaje */
+            font-size: 1.2em; /* Hace el ícono un poco más grande */
+            line-height: 1; /* Asegura que el ícono esté centrado verticalmente */
+        }
+
+        .settings-btn:hover {
+            background-color: #f0f0f0; /* Fondo muy claro al pasar el mouse */
+            border-color: #aaa;
+        }
+
+        /* Estilo para el botón de Iniciar Sesión */
+        .login-btn {
+            background-color: #007bff;
+            color: white;
+            border: 1px solid #007bff;
+        }
+
+        .login-btn:hover {
+            background-color: #0056b3;
+        }
+
+        /* Estilo para el botón de Registro */
+        .register-btn {
+            background-color: transparent;
+            color: #007bff;
+            border: 1px solid #007bff;
+        }
+
+        .register-btn:hover {
+            background-color: #e6f0ff;
+        }
+    </style>
+</head>
+<body>
+
+    <div class="auth-buttons">
+        <a href="{% url 'nucleo:ajustes' %}" class="button settings-btn">⚙️</a>
+        <a href="{% url 'nucleo:iniciosesion' %}" class="button login-btn">Iniciar Sesión</a>
+        <a href="{% url 'nucleo:registro' %}" class="button register-btn">Registro</a>
+    </div>
+    <div class="home-container blue">
+
+    <h1 class="title">TOURIST PLACE</h1>
+
+    <div class="search-bar">
+        <input type="text" placeholder="Search...">
+        <button class="search-btn">🔍</button>
+    </div>
+
+    <div class="card">
+        <img src="https://tajin.hotelesdeveracruzmexico.com/data/Images/700x500w/3454/345420/345420595/image-papantla-de-olarte-hotel-tajin-1.JPEG">
+        <div class="card-content">
+            <h3>Hotel Tajín</h3>
+            <p class="rating">⭐ 4.0 (1,666)</p>
+            <p>Hotel de 3 estrellas — Wi-Fi gratis</p>
+        </div>
+    </div>
+
+    <div class="card">
+        <img src="https://www.mexicodesconocido.com.mx/wp-content/uploads/2010/05/el-tajin-veracruz-flickr-luis-c.jpg">
+        <div class="card-content">
+            <h3>Zona Arqueológica El Tajín</h3>
+            <p class="rating">⭐ 4.7 (18,679)</p>
+            <p>Museo — Abre a las 9 a.m.</p>
+        </div>
+    </div>
+
+    <div class="bottom-menu">
+    <a href="{% url 'nucleo:principal' %}" class="btn">Inicio</a>
+    <a href="#" class="btn">Mapa</a>
+    <a href="{% url 'nucleo:ajustes' %}" class="btn">Config</a>
+    </div>
+
+</div>
+
+</body>
+</html>

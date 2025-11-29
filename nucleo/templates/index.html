@@ -1,0 +1,22 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <title>Tourist Places - Inicio</title>
+    <link rel="stylesheet" href="{% static 'nucleo/style.css' %}">
+</head>
+<body>
+
+<div class="container" style="text-align:center; margin-top:50px;">
+    <h1>Tourist Places</h1>
+    <p>Selecciona una opción:</p>
+    <a href="{% url 'nucleo:iniciosesion' %}" class="btn">Iniciar sesión</a>
+    <a href="{% url 'nucleo:registro' %}" class="btn">Registrarse</a>
+    <a href="{% url 'nucleo:principal' %}" class="btn">Página principal</a>
+    <a href="{% url 'nucleo:ajustes' %}" class="btn">Ajustes</a>
+
+</div>
+
+</body>
+</html>
