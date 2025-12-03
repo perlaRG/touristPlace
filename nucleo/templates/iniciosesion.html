@@ -12,6 +12,12 @@
     <h1>Tourist Places</h1>
     <h2>Iniciar Sesión</h2>
 
+    {% if mensaje %}
+    <div style="background:#d4edda;color:#155724;padding:12px 16px;border-radius:6px;margin:12px auto;width:90%;max-width:480px;border:1px solid #c3e6cb;">
+        {{ mensaje }}
+    </div>
+    {% endif %}
+
     <form>
         <label>Correo electrónico</label>
         <input type="email">

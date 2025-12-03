@@ -5,10 +5,22 @@
     <meta charset="UTF-8">
     <title>Tourist Places - Inicio</title>
     <link rel="stylesheet" href="{% static 'nucleo/style.css' %}">
+    <style>
+    /* ...existing code... */
+    /* Separación entre botones: ajustar gap según convenga */
+    .container {
+        display: flex;
+        flex-direction: column; /* usar row para alinearlos en fila */
+        gap: 12px;              /* espacio entre botones */
+        align-items: center;
+        text-align: center;
+        margin-top: 50px;
+    }
+    </style>
 </head>
 <body>
 
-<div class="container" style="text-align:center; margin-top:50px;">
+<div class="container">
     <h1>Tourist Places</h1>
     <p>Selecciona una opción:</p>
     <a href="{% url 'nucleo:iniciosesion' %}" class="btn">Iniciar sesión</a>
