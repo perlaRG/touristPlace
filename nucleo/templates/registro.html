@@ -5,33 +5,153 @@
     <meta charset="UTF-8">
     <title>Tourist Places - Registro</title>
     <link rel="stylesheet" href="{% static 'nucleo/style.css' %}">
+    <style>
+        body {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 20px;
+        }
+
+        .container {
+            max-width: 500px;
+            width: 100%;
+            background: white;
+            border-radius: 12px;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
+            padding: 40px;
+        }
+
+        h1 {
+            color: #667eea;
+            text-align: center;
+            margin: 0 0 10px 0;
+            font-size: 28px;
+        }
+
+        h2 {
+            color: #333;
+            text-align: center;
+            margin: 0 0 30px 0;
+            font-size: 22px;
+            border-bottom: 3px solid #667eea;
+            padding-bottom: 15px;
+        }
+
+        form {
+            display: flex;
+            flex-direction: column;
+            gap: 18px;
+        }
+
+        label {
+            color: #555;
+            font-weight: 600;
+            margin-bottom: 5px;
+            display: block;
+        }
+
+        input {
+            padding: 12px 15px;
+            border: 2px solid #ddd;
+            border-radius: 6px;
+            font-size: 14px;
+            transition: all 0.3s ease;
+        }
+
+        input:focus {
+            outline: none;
+            border-color: #667eea;
+            box-shadow: 0 0 0 3px rgba(102, 126, 234, 0.1);
+        }
+
+        .button-group {
+            display: flex;
+            gap: 12px;
+            margin-top: 10px;
+        }
+
+        .btn {
+            flex: 1;
+            padding: 12px;
+            border: none;
+            border-radius: 6px;
+            font-weight: 600;
+            cursor: pointer;
+            text-decoration: none;
+            text-align: center;
+            transition: all 0.3s ease;
+        }
+
+        .btn-submit {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+        }
+
+        .btn-submit:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 8px 20px rgba(102, 126, 234, 0.4);
+        }
+
+        .btn-secondary {
+            background: #f5f5f5;
+            color: #333;
+            border: 2px solid #ddd;
+        }
+
+        .btn-secondary:hover {
+            background: #e8e8e8;
+            border-color: #667eea;
+            color: #667eea;
+            transform: translateY(-2px);
+        }
+
+        .form-group {
+            display: flex;
+            flex-direction: column;
+        }
+    </style>
 </head>
 <body>
 
-<div class="container green">
-    <h1>Tourist Places</h1>
+<div class="container">
+    <h1>🌍 Tourist Places</h1>
     <h2>Registrarse</h2>
 
     <form id="registroForm" novalidate method="post" action="{% url 'nucleo:registrar' %}">
         {% csrf_token %}
-        <label for="nombre">Nombre</label>
-        <input id="nombre" name="nombre" type="text" placeholder="Tu nombre completo">
+        
+        <div class="form-group">
+            <label for="nombre">👤 Nombre</label>
+            <input id="nombre" name="nombre" type="text" placeholder="Tu nombre completo" required>
+        </div>
 
-        <label for="email">Correo electrónico</label>
-        <input id="email" name="email" type="email" placeholder="tu@ejemplo.com">
+        <div class="form-group">
+            <label for="email">📧 Correo electrónico</label>
+            <input id="email" name="email" type="email" placeholder="tu@ejemplo.com" required>
+        </div>
 
-        <label for="password">Contraseña</label>
-        <input id="password" name="password" type="password" placeholder="Contraseña">
+        <div class="form-group">
+            <label for="password">🔒 Contraseña</label>
+            <input id="password" name="password" type="password" placeholder="Contraseña" required>
+        </div>
 
-        <label for="confirm_password">Confirmar Contraseña</label>
-        <input id="confirm_password" name="confirm_password" type="password" placeholder="Repite la contraseña">
+        <div class="form-group">
+            <label for="confirm_password">🔒 Confirmar Contraseña</label>
+            <input id="confirm_password" name="confirm_password" type="password" placeholder="Repite la contraseña" required>
+        </div>
 
-        <label for="telefono">Teléfono</label>
-        <input id="telefono" name="telefono" type="text" placeholder="+34 600 000 000">
+        <div class="form-group">
+            <label for="telefono">📱 Teléfono</label>
+            <input id="telefono" name="telefono" type="text" placeholder="+34 600 000 000" required>
+        </div>
 
-        <button type="button" id="submitBtn" class="btn">Registrarse</button>
-        <a href="{% url 'nucleo:index' %}" class="btn">Volver al inicio</a>
-
+        <div class="button-group">
+            <button type="button" id="submitBtn" class="btn btn-submit">✓ Registrarse</button>
+            <a href="{% url 'nucleo:index' %}" class="btn btn-secondary">← Volver</a>
+        </div>
     </form>
 
     <script>
@@ -53,10 +173,8 @@
 
         submitBtn.addEventListener('click', function(){
             if (todosCompletos()){
-                // Enviar el formulario por POST al servidor (acción definida en el atributo action)
                 form.submit();
             } else {
-                // Redirigir a la página de advertencia si falta información
                 window.location.href = "{% url 'nucleo:advertencia' %}";
             }
         });
