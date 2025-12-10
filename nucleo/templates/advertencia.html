@@ -1,0 +1,128 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <title>⚠️ Advertencia - Tourist Places</title>
+    <link rel="stylesheet" href="{% static 'nucleo/style.css' %}">
+    <style>
+        body {
+            background: linear-gradient(135deg, #ff6b6b 0%, #ee5a6f 100%);
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 20px;
+        }
+
+        .container {
+            max-width: 600px;
+            width: 100%;
+            background: white;
+            border-radius: 12px;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
+            padding: 40px;
+            text-align: center;
+        }
+
+        .warn-icon {
+            font-size: 64px;
+            margin-bottom: 20px;
+        }
+
+        h1 {
+            color: #e74c3c;
+            font-size: 28px;
+            margin: 0 0 20px 0;
+            border-bottom: 3px solid #e74c3c;
+            padding-bottom: 15px;
+        }
+
+        p {
+            color: #555;
+            font-size: 16px;
+            line-height: 1.6;
+            margin: 15px 0;
+        }
+
+        .message-box {
+            background: #ffebee;
+            padding: 20px;
+            border-radius: 6px;
+            border-left: 4px solid #e74c3c;
+            margin: 20px 0;
+            color: #c62828;
+            font-weight: 500;
+        }
+
+        .button-group {
+            display: flex;
+            gap: 12px;
+            margin-top: 30px;
+            flex-wrap: wrap;
+            justify-content: center;
+        }
+
+        .btn {
+            padding: 12px 25px;
+            border: none;
+            border-radius: 6px;
+            font-weight: 600;
+            cursor: pointer;
+            text-decoration: none;
+            text-align: center;
+            transition: all 0.3s ease;
+            min-width: 150px;
+        }
+
+        .btn-primary {
+            background: #e74c3c;
+            color: white;
+        }
+
+        .btn-primary:hover {
+            background: #c0392b;
+            transform: translateY(-2px);
+            box-shadow: 0 8px 20px rgba(231, 76, 60, 0.4);
+        }
+
+        .btn-secondary {
+            background: #f5f5f5;
+            color: #333;
+            border: 2px solid #ddd;
+        }
+
+        .btn-secondary:hover {
+            background: #e8e8e8;
+            border-color: #e74c3c;
+            color: #e74c3c;
+            transform: translateY(-2px);
+        }
+    </style>
+</head>
+<body>
+
+<div class="container">
+    <div class="warn-icon">⚠️</div>
+    <h1>Error en la operación</h1>
+    
+    {% if mensaje %}
+        <div class="message-box">
+            {{ mensaje }}
+        </div>
+    {% else %}
+        <div class="message-box">
+            Ocurrió un error. Por favor verifica los datos e intenta de nuevo.
+        </div>
+    {% endif %}
+
+    <p>Si el problema persiste, contacta con soporte o intenta más tarde.</p>
+
+    <div class="button-group">
+        <a href="{% url 'nucleo:registro' %}" class="btn btn-primary">← Volver al registro</a>
+        <a href="{% url 'nucleo:index' %}" class="btn btn-secondary">🏠 Ir al inicio</a>
+    </div>
+</div>
+
+</body>
+</html>

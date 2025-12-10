@@ -1,0 +1,618 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Tourist Places - Descubre Lugares Turísticos</title>
+    <link rel="stylesheet" href="{% static 'nucleo/style.css' %}">
+    
+    <style>
+        * {
+            box-sizing: border-box;
+        }
+
+        body {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+            padding: 20px;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            margin: 0;
+        }
+
+        .main-container {
+            max-width: 1400px;
+            margin: 0 auto;
+        }
+
+        .header {
+            background: white;
+            border-radius: 12px;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
+            padding: 30px;
+            margin-bottom: 30px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            flex-wrap: wrap;
+            gap: 20px;
+        }
+
+        .header h1 {
+            color: #333;
+            font-size: 36px;
+            margin: 0;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+
+        .header-buttons {
+            display: flex;
+            gap: 12px;
+            flex-wrap: wrap;
+            align-items: center;
+        }
+
+        .btn-icon {
+            background: #f5f5f5;
+            border: 2px solid #ddd;
+            padding: 12px 16px;
+            border-radius: 8px;
+            font-size: 20px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            text-decoration: none;
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .btn-icon:hover {
+            background: #667eea;
+            border-color: #667eea;
+            color: white;
+            transform: translateY(-2px);
+            box-shadow: 0 4px 12px rgba(102, 126, 234, 0.3);
+        }
+
+        .btn-auth {
+            padding: 12px 24px;
+            border: none;
+            border-radius: 6px;
+            font-weight: 600;
+            cursor: pointer;
+            text-decoration: none;
+            transition: all 0.3s ease;
+            font-size: 14px;
+            display: inline-block;
+        }
+
+        .btn-login {
+            background: #667eea;
+            color: white;
+        }
+
+        .btn-login:hover {
+            background: #764ba2;
+            transform: translateY(-2px);
+            box-shadow: 0 4px 12px rgba(102, 126, 234, 0.4);
+        }
+
+        .btn-register {
+            background: white;
+            color: #667eea;
+            border: 2px solid #667eea;
+        }
+
+        .btn-register:hover {
+            background: #667eea;
+            color: white;
+            transform: translateY(-2px);
+            box-shadow: 0 4px 12px rgba(102, 126, 234, 0.4);
+        }
+
+        .content-section {
+            background: white;
+            border-radius: 12px;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
+            padding: 30px;
+            margin-bottom: 30px;
+        }
+
+        .content-section h2 {
+            color: #333;
+            margin: 0 0 25px 0;
+            border-bottom: 3px solid #667eea;
+            padding-bottom: 15px;
+            font-size: 28px;
+        }
+
+        .search-bar {
+            margin-bottom: 25px;
+            display: flex;
+            gap: 10px;
+        }
+
+        .search-bar input {
+            flex: 1;
+            padding: 12px 16px;
+            border: 2px solid #ddd;
+            border-radius: 6px;
+            font-size: 14px;
+            font-family: inherit;
+            transition: border-color 0.3s ease;
+        }
+
+        .search-bar input:focus {
+            outline: none;
+            border-color: #667eea;
+        }
+
+        .cards-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
+            gap: 20px;
+            margin-bottom: 20px;
+        }
+
+        .card {
+            background: #f9f9f9;
+            border-radius: 10px;
+            overflow: hidden;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+            transition: all 0.3s ease;
+            display: flex;
+            flex-direction: column;
+            cursor: pointer;
+        }
+
+        .card:hover {
+            transform: translateY(-8px);
+            box-shadow: 0 12px 25px rgba(102, 126, 234, 0.3);
+        }
+
+        .card-image {
+            width: 100%;
+            height: 220px;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            font-size: 50px;
+            overflow: hidden;
+            position: relative;
+        }
+
+        .card-image img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+
+        .card-content {
+            padding: 20px;
+            flex: 1;
+            display: flex;
+            flex-direction: column;
+        }
+
+        .card-content h3 {
+            margin: 0 0 10px 0;
+            color: #333;
+            font-size: 18px;
+            font-weight: 700;
+        }
+
+        .card-meta {
+            display: flex;
+            gap: 10px;
+            font-size: 13px;
+            color: #666;
+            margin-bottom: 10px;
+            flex-wrap: wrap;
+        }
+
+        .card-meta span {
+            background: #f0f0f0;
+            padding: 3px 8px;
+            border-radius: 4px;
+        }
+
+        .card-content p {
+            color: #666;
+            margin: 0;
+            flex: 1;
+            line-height: 1.5;
+        }
+
+        .card-button {
+            margin-top: 15px;
+            padding: 10px 16px;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            border: none;
+            border-radius: 6px;
+            cursor: pointer;
+            font-weight: 600;
+            font-size: 13px;
+            transition: all 0.3s ease;
+            text-decoration: none;
+            display: inline-block;
+            text-align: center;
+        }
+
+        .card-button:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 6px 15px rgba(102, 126, 234, 0.3);
+        }
+
+        .footer-menu {
+            background: white;
+            border-radius: 12px;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
+            padding: 20px;
+            display: flex;
+            gap: 15px;
+            justify-content: center;
+            flex-wrap: wrap;
+        }
+
+        .footer-menu a {
+            padding: 12px 28px;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            border: none;
+            border-radius: 6px;
+            text-decoration: none;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            font-size: 15px;
+        }
+
+        .footer-menu a:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 8px 20px rgba(102, 126, 234, 0.4);
+        }
+
+        .filter-bar {
+            display: flex;
+            gap: 10px;
+            margin-bottom: 20px;
+            flex-wrap: wrap;
+        }
+
+        .filter-btn {
+            padding: 8px 16px;
+            background: #f0f0f0;
+            border: 2px solid #ddd;
+            border-radius: 20px;
+            cursor: pointer;
+            font-weight: 600;
+            font-size: 13px;
+            transition: all 0.3s ease;
+            color: #333;
+        }
+
+        .filter-btn:hover,
+        .filter-btn.active {
+            background: #667eea;
+            color: white;
+            border-color: #667eea;
+        }
+
+        .no-results {
+            text-align: center;
+            padding: 40px 20px;
+            color: #999;
+        }
+
+        .no-results p {
+            font-size: 16px;
+            margin: 10px 0 0 0;
+        }
+
+        @media (max-width: 768px) {
+            .header {
+                flex-direction: column;
+                text-align: center;
+            }
+
+            .header h1 {
+                font-size: 28px;
+                width: 100%;
+            }
+
+            .header-buttons {
+                justify-content: center;
+                width: 100%;
+            }
+
+            .cards-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .content-section {
+                padding: 20px;
+            }
+
+            .search-bar {
+                flex-direction: column;
+            }
+        }
+    </style>
+</head>
+<body>
+
+<div class="main-container">
+    <div class="header">
+        <h1>🌍 Tourist Places</h1>
+        <div class="header-buttons">
+            <a href="https://www.google.com/maps" target="_blank" class="btn-icon" title="Google Maps">🗺️</a>
+            <a href="{% url 'nucleo:principal' %}" class="btn-icon" title="Inicio">📍</a>
+            <a href="{% url 'nucleo:usuarios_list' %}" class="btn-icon" title="Usuarios">👥</a>
+            <a href="{% url 'nucleo:ajustes' %}" class="btn-icon" title="Configuración">⚙️</a>
+        </div>
+    </div>
+
+    <div class="content-section">
+        <h2>🏖️ Lugares Turísticos de Veracruz</h2>
+        <p style="color: #666; margin: 0 0 15px 0;">Descubre los mejores lugares para visitar. Haz clic en cualquier tarjeta para ver la ubicación en Google Maps.</p>
+        
+        <div class="cards-grid">
+            <!-- Acuario de Veracruz -->
+            <div class="card" onclick="window.open('https://www.google.com.mx/maps/place/Aquarium+del+Puerto+de+Veracruz/@19.1871821,-96.125469,17z/data=!3m1!4b1!4m6!3m5!1s0x85c346cddf763ba3:0x54363baf63240535!8m2!3d19.1871821!4d-96.1228941!16s%2Fg%2F120ylgtj?entry=ttu&g_ep=EgoyMDI1MTIwMi4wIKXMDSoASAFQAw%3D%3D', '_blank')">
+                <div class="card-image">
+                    <img src="https://www.sinembargo.mx/wp-content/uploads/2020/05/acuarioveracruz4.jpg" alt="Acuario de Veracruz" onerror="this.style.display='none'">
+                </div>
+                <div class="card-content">
+                    <h3>🐠 Acuario de Veracruz</h3>
+                    <div class="card-meta">
+                        <span>⭐ Destacado</span>
+                        <span>🌊 Acuario</span>
+                    </div>
+                    <p>Considerado uno de los acuarios más grandes de América Latina, con exhibiciones de peces de agua dulce y salada, medusas, tiburones y pingüinos.</p>
+                    <a href="https://www.google.com.mx/maps/place/Aquarium+del+Puerto+de+Veracruz/@19.1871821,-96.125469,17z/data=!3m1!4b1!4m6!3m5!1s0x85c346cddf763ba3:0x54363baf63240535!8m2!3d19.1871821!4d-96.1228941!16s%2Fg%2F120ylgtj?entry=ttu&g_ep=EgoyMDI1MTIwMi4wIKXMDSoASAFQAw%3D%3D" target="_blank" class="card-button">Ver en Mapa</a>
+                </div>
+            </div>
+
+            <!-- San Juan de Ulúa -->
+            <div class="card" onclick="window.open('https://www.google.com.mx/maps/place/San+Juan+de+Ulua/@19.1999994,-96.1436331,15z/data=!3m1!4b1!4m6!3m5!1s0x85c346bf3d0b7a23:0x1b53e58197082a7a!8m2!3d19.2!4d-96.1333333!16s%2Fg%2F11c5m4n2my?entry=ttu&g_ep=EgoyMDI1MTIwMi4wIKXMDSoASAFQAw%3D%3D', '_blank')">
+                <div class="card-image">
+                    <img src="https://tse3.mm.bing.net/th/id/OIP.isyYhx6zrl6_d7MrVDAI3AHaE7?cb=ucfimg2&ucfimg=1&rs=1&pid=ImgDetMain&o=7&rm=3" alt="San Juan de Ulúa" onerror="this.style.display='none'">
+                </div>
+                <div class="card-content">
+                    <h3>🏰 San Juan de Ulúa</h3>
+                    <div class="card-meta">
+                        <span>📍 Histórico</span>
+                        <span>🏛️ Fuerte</span>
+                    </div>
+                    <p>Fuerte histórico y cárcel emblemática, importante para la defensa del puerto de Veracruz. Guías narran historias y leyendas españolas.</p>
+                    <a href="https://www.google.com.mx/maps/place/San+Juan+de+Ulua/@19.1999994,-96.1436331,15z/data=!3m1!4b1!4m6!3m5!1s0x85c346bf3d0b7a23:0x1b53e58197082a7a!8m2!3d19.2!4d-96.1333333!16s%2Fg%2F11c5m4n2my?entry=ttu&g_ep=EgoyMDI1MTIwMi4wIKXMDSoASAFQAw%3D%3D" target="_blank" class="card-button">Ver en Mapa</a>
+                </div>
+            </div>
+
+            <!-- Boca del Río -->
+            <div class="card" onclick="window.open('https://www.google.com.mx/maps/place/94290+Boca+del+R%C3%ADo,+Ver./@19.1059949,-96.1159169,15z/data=!3m1!4b1!4m6!3m5!1s0x85c3403440e352bd:0xa89d9d73dad1ee30!8m2!3d19.106273!4d-96.1063204!16zL20vMDF3Y3M2?entry=ttu&g_ep=EgoyMDI1MTIwMi4wIKXMDSoASAFQAw%3D%3D', '_blank')">
+                <div class="card-image">
+                    <img src="https://content.r9cdn.net/rimg/dimg/12/6e/69b3fe39-city-41497-170e7480a83.jpg?width=1366&height=768&xhint=3013&yhint=701&crop=true" alt="Boca del Río" onerror="this.style.display='none'">
+                </div>
+                <div class="card-content">
+                    <h3>🏝️ Boca del Río</h3>
+                    <div class="card-meta">
+                        <span>🏖️ Playa</span>
+                        <span>🍤 Gastronomía</span>
+                    </div>
+                    <p>Zona costera con playas hermosas, ecoturismo, hoteles de cinco estrellas y actividades acuáticas. Destaca por su excelente gastronomía de mariscos.</p>
+                    <a href="https://www.google.com.mx/maps/place/94290+Boca+del+R%C3%ADo,+Ver./@19.1059949,-96.1159169,15z/data=!3m1!4b1!4m6!3m5!1s0x85c3403440e352bd:0xa89d9d73dad1ee30!8m2!3d19.106273!4d-96.1063204!16zL20vMDF3Y3M2?entry=ttu&g_ep=EgoyMDI1MTIwMi4wIKXMDSoASAFQAw%3D%3D" target="_blank" class="card-button">Ver en Mapa</a>
+                </div>
+            </div>
+
+            <!-- Museo Naval de México -->
+            <div class="card" onclick="window.open('https://www.google.com.mx/maps/place/Museo+Naval+M%C3%A9xico/@19.199311,-96.1376975,17z/data=!3m1!4b1!4m6!3m5!1s0x85c346bec76672b9:0x9df0190bc5ada5a3!8m2!3d19.199311!4d-96.1351226!16s%2Fg%2F11cspbd31w?entry=ttu&g_ep=EgoyMDI1MTIwMi4wIKXMDSoASAFQAw%3D%3D', '_blank')">
+                <div class="card-image">
+                    <img src="https://3.bp.blogspot.com/-OBytFZ8aT94/T9VPAzR7dyI/AAAAAAAAAH4/_ra0KvS-N9Y/s1600/FOTO+1.JPG" alt="Museo Naval" onerror="this.style.display='none'">
+                </div>
+                <div class="card-content">
+                    <h3>⚓ Museo Naval de México</h3>
+                    <div class="card-meta">
+                        <span>🏛️ Museo</span>
+                        <span>📚 Cultura</span>
+                    </div>
+                    <p>Exhibición histórica de la Armada de México con buques del conflicto de 1914 y 18 salas temáticas. Una joya para los amantes de la historia naval.</p>
+                    <a href="https://www.google.com.mx/maps/place/Museo+Naval+M%C3%A9xico/@19.199311,-96.1376975,17z/data=!3m1!4b1!4m6!3m5!1s0x85c346bec76672b9:0x9df0190bc5ada5a3!8m2!3d19.199311!4d-96.1351226!16s%2Fg%2F11cspbd31w?entry=ttu&g_ep=EgoyMDI1MTIwMi4wIKXMDSoASAFQAw%3D%3D" target="_blank" class="card-button">Ver en Mapa</a>
+                </div>
+            </div>
+
+            <!-- Parque Acuático Inbursa -->
+            <div class="card" onclick="window.open('https://www.google.com.mx/maps/place/Aquatico+Inbursa/@19.1668202,-96.1966485,17z/data=!3m1!4b1!4m6!3m5!1s0x85c34383211973bf:0x79d9533382885bf5!8m2!3d19.1668202!4d-96.1940736!16s%2Fg%2F11cm04t446?entry=ttu&g_ep=EgoyMDI1MTIwMi4wIKXMDSoASAFQAw%3D%3D', '_blank')">
+                <div class="card-image">
+                    <img src="https://d3rr2gvhjw0wwy.cloudfront.net/uploads/activity_galleries/149850/1500x1500-0-70-50b142086c452139f055996540560c8c.jpg" alt="Parque Acuático" onerror="this.style.display='none'">
+                </div>
+                <div class="card-content">
+                    <h3>🌊 Parque Acuático Inbursa</h3>
+                    <div class="card-meta">
+                        <span>👨‍👩‍👧‍👦 Familiar</span>
+                        <span>🎉 Entretenimiento</span>
+                    </div>
+                    <p>Destino familiar con toboganes, río artificial y alberca de olas. Perfecto para niños y adultos que buscan diversión acuática.</p>
+                    <a href="https://www.google.com.mx/maps/place/Aquatico+Inbursa/@19.1668202,-96.1966485,17z/data=!3m1!4b1!4m6!3m5!1s0x85c34383211973bf:0x79d9533382885bf5!8m2!3d19.1668202!4d-96.1940736!16s%2Fg%2F11cm04t446?entry=ttu&g_ep=EgoyMDI1MTIwMi4wIKXMDSoASAFQAw%3D%3D" target="_blank" class="card-button">Ver en Mapa</a>
+                </div>
+            </div>
+
+            <!-- Palacio Municipal -->
+            <div class="card" onclick="window.open('https://www.google.com.mx/maps/place/Edificio+Municipal+de+Veracruz/@19.2006157,-96.1405433,17z/data=!3m1!4b1!4m6!3m5!1s0x85c346bc3845e9d7:0x2e99c5f58ce5a88!8m2!3d19.2006157!4d-96.1379684!16s%2Fg%2F1ttyx2kr?entry=ttu&g_ep=EgoyMDI1MTIwMi4wIKXMDSoASAFQAw%3D%3D', '_blank')">
+                <div class="card-image">
+                    <img src="https://tse2.mm.bing.net/th/id/OIP._reU3L6TPGsgjdXmynf3yAHaFj?cb=ucfimg2&ucfimg=1&rs=1&pid=ImgDetMain&o=7&rm=3" alt="Palacio Municipal" onerror="this.style.display='none'">
+                </div>
+                <div class="card-content">
+                    <h3>🏛️ Palacio Municipal</h3>
+                    <div class="card-meta">
+                        <span>🏰 Colonial</span>
+                        <span>📍 Centro</span>
+                    </div>
+                    <p>Antigua residencia de gobernantes y virreyes con arquitectura colonial toscana. Histórico desde el primer ayuntamiento en América.</p>
+                    <a href="https://www.google.com.mx/maps/place/Edificio+Municipal+de+Veracruz/@19.2006157,-96.1405433,17z/data=!3m1!4b1!4m6!3m5!1s0x85c346bc3845e9d7:0x2e99c5f58ce5a88!8m2!3d19.2006157!4d-96.1379684!16s%2Fg%2F1ttyx2kr?entry=ttu&g_ep=EgoyMDI1MTIwMi4wIKXMDSoASAFQAw%3D%3D" target="_blank" class="card-button">Ver en Mapa</a>
+                </div>
+            </div>
+
+            <!-- Playa de Chachalacas -->
+            <div class="card" onclick="window.open('https://www.google.com.mx/maps/place/91666+Playa+de+Chachalacas,+Ver./@19.4277584,-96.3359062,15z/data=!3m1!4b1!4m6!3m5!1s0x85c354828fcd9a5b:0xf887655601a313ad!8m2!3d19.4216467!4d-96.322208!16s%2Fm%2F047p1n6?entry=ttu&g_ep=EgoyMDI1MTIwMi4wIKXMDSoASAFQAw%3D%3D', '_blank')">
+                <div class="card-image">
+                    <img src="https://www.playasmexico.com.mx/wp-content/uploads/2021/04/2-7-1024x536.jpg" alt="Playa Chachalacas" onerror="this.style.display='none'">
+                </div>
+                <div class="card-content">
+                    <h3>🏄 Playa de Chachalacas</h3>
+                    <div class="card-meta">
+                        <span>🏖️ Playa</span>
+                        <span>🏄 Deportes</span>
+                    </div>
+                    <p>Ideal para deportes acuáticos, cuatrimotos y relajación familiar. Destaca por sus dunas y oleaje suave, perfecta para todas las edades.</p>
+                    <a href="https://www.google.com.mx/maps/place/91666+Playa+de+Chachalacas,+Ver./@19.4277584,-96.3359062,15z/data=!3m1!4b1!4m6!3m5!1s0x85c354828fcd9a5b:0xf887655601a313ad!8m2!3d19.4216467!4d-96.322208!16s%2Fm%2F047p1n6?entry=ttu&g_ep=EgoyMDI1MTIwMi4wIKXMDSoASAFQAw%3D%3D" target="_blank" class="card-button">Ver en Mapa</a>
+                </div>
+            </div>
+
+            <!-- Coatepec -->
+            <div class="card" onclick="window.open('https://www.google.com.mx/maps/place/Coatepec,+Ver./@19.4551294,-96.9791722,14z/data=!3m1!4b1!4m6!3m5!1s0x85c4d2ce63b40913:0x5b298fe4dabd7ce7!8m2!3d19.451938!4d-96.9594511!16zL20vMDE3YjBk?entry=ttu&g_ep=EgoyMDI1MTIwMi4wIKXMDSoASAFQAw%3D%3D', '_blank')">
+                <div class="card-image">
+                    <img src="https://lospueblosmagicos.com/wp-content/uploads/2020/10/PM_FB_Ver_Coatepec_2_16x9-1.jpg" alt="Coatepec" onerror="this.style.display='none'">
+                </div>
+                <div class="card-content">
+                    <h3>☕ Coatepec</h3>
+                    <div class="card-meta">
+                        <span>✨ Pueblo Mágico</span>
+                        <span>🌾 Café</span>
+                    </div>
+                    <p>Pueblo Mágico famoso por su café y tradición cafetalera. Visita el Museo del Café y disfruta del aroma del grano local.</p>
+                    <a href="https://www.google.com.mx/maps/place/Coatepec,+Ver./@19.4551294,-96.9791722,14z/data=!3m1!4b1!4m6!3m5!1s0x85c4d2ce63b40913:0x5b298fe4dabd7ce7!8m2!3d19.451938!4d-96.9594511!16zL20vMDE3YjBk?entry=ttu&g_ep=EgoyMDI1MTIwMi4wIKXMDSoASAFQAw%3D%3D" target="_blank" class="card-button">Ver en Mapa</a>
+                </div>
+            </div>
+
+            <!-- Malecón de Veracruz -->
+            <div class="card" onclick="window.open('https://www.google.com.mx/maps/place/Malec%C3%B3n+Veracruz+Puerto/@19.2021502,-96.1366483,17z/data=!3m1!4b1!4m6!3m5!1s0x85c3474400e843f1:0xfa74804da36e4188!8m2!3d19.2021502!4d-96.1340734!16s%2Fg%2F11ghpz42l3?entry=ttu&g_ep=EgoyMDI1MTIwMi4wIKXMDSoASAFQAw%3D%3D', '_blank')">
+                <div class="card-image">
+                    <img src="https://tse2.mm.bing.net/th/id/OIP.6Ar5_d9cptEp1f08gx2VQgHaDP?cb=ucfimg2&ucfimg=1&rs=1&pid=ImgDetMain&o=7&rm=3" alt="Malecón Veracruz" onerror="this.style.display='none'">
+                </div>
+                <div class="card-content">
+                    <h3>🌅 Malecón de Veracruz</h3>
+                    <div class="card-meta">
+                        <span>🚶 Paseo</span>
+                        <span>🌊 Golfo</span>
+                    </div>
+                    <p>Paseo marítimo emblemático con vistas al Golfo de México. Ideal para caminar y disfrutar de hermosos atardeceres con el mar.</p>
+                    <a href="https://www.google.com.mx/maps/place/Malec%C3%B3n+Veracruz+Puerto/@19.2021502,-96.1366483,17z/data=!3m1!4b1!4m6!3m5!1s0x85c3474400e843f1:0xfa74804da36e4188!8m2!3d19.2021502!4d-96.1340734!16s%2Fg%2F11ghpz42l3?entry=ttu&g_ep=EgoyMDI1MTIwMi4wIKXMDSoASAFQAw%3D%3D" target="_blank" class="card-button">Ver en Mapa</a>
+                </div>
+            </div>
+
+            <!-- El Tajín -->
+            <div class="card" onclick="window.open('https://www.google.com.mx/maps/place/Zona+Arqueol%C3%B3gica+El+Taj%C3%ADn/@20.4431885,-97.3789311,17z/data=!3m1!4b1!4m6!3m5!1s0x85d41549d4f0d66f:0x4101e40a049d5c4b!8m2!3d20.4431885!4d-97.3763562!16s%2Fg%2F122c4w0f?entry=ttu', '_blank')">
+                <div class="card-image">
+                    <img src="https://www.mexicodesconocido.com.mx/wp-content/uploads/2010/05/el-tajin-veracruz-flickr-luis-c.jpg" alt="El Tajín" onerror="this.style.display='none'">
+                </div>
+                <div class="card-content">
+                    <h3>🏛️ El Tajín (Zona Arqueológica)</h3>
+                    <div class="card-meta">
+                        <span>🏺 Prehispánico</span>
+                        <span>🌍 UNESCO</span>
+                    </div>
+                    <p>Majestuosa ciudad prehispánica Totonaca, famosa por su Pirámide de los Nichos. Patrimonio de la Humanidad por la UNESCO.</p>
+                    <a href="https://www.google.com.mx/maps/place/Zona+Arqueol%C3%B3gica+El+Taj%C3%ADn/@20.4431885,-97.3789311,17z/data=!3m1!4b1!4m6!3m5!1s0x85d41549d4f0d66f:0x4101e40a049d5c4b!8m2!3d20.4431885!4d-97.3763562!16s%2Fg%2F122c4w0f?entry=ttu" target="_blank" class="card-button">Ver en Mapa</a>
+                </div>
+            </div>
+
+            <!-- Cascadas de Texolo -->
+            <div class="card" onclick="window.open('https://www.google.com.mx/maps/place/Cascadas+de+Texolo/@19.4180808,-97.0094958,15z/data=!4m6!3m5!1s0x85db49b1ed1e828d:0x937c862145e54d58!8m2!3d19.4180808!4d-97.0007411!16zL20vMDd4Ynh2?entry=ttu', '_blank')">
+                <div class="card-image">
+                    <img src="https://i0.wp.com/conlamochila.com/wp-content/uploads/2020/02/SaltoMenorTexoloXico.jpg?ssl=1" alt="Cascadas Texolo" onerror="this.style.display='none'">
+                </div>
+                <div class="card-content">
+                    <h3>💦 Cascadas de Texolo</h3>
+                    <div class="card-meta">
+                        <span>🌲 Naturaleza</span>
+                        <span>🥾 Senderismo</span>
+                    </div>
+                    <p>Impresionantes cascadas en entorno natural exuberante. Ideal para senderismo y disfrutar de la flora y fauna local. Cerca de Xico.</p>
+                    <a href="https://www.google.com.mx/maps/place/Cascadas+de+Texolo/@19.4180808,-97.0094958,15z/data=!4m6!3m5!1s0x85db49b1ed1e828d:0x937c862145e54d58!8m2!3d19.4180808!4d-97.0007411!16zL20vMDd4Ynh2?entry=ttu" target="_blank" class="card-button">Ver en Mapa</a>
+                </div>
+            </div>
+
+            <!-- Catemaco -->
+            <div class="card" onclick="window.open('https://www.google.com.mx/maps/place/Catemaco/@18.4116416,-95.1227845,14z/data=!3m1!4b1!4m6!3m5!1s0x85be16f125a3311f:0xb338a8e102f9024!8m2!3d18.4239855!4d-95.1093952!16zL20vMDdmMjFq?entry=ttu', '_blank')">
+                <div class="card-image">
+                    <img src="https://tse4.mm.bing.net/th/id/OIP.Xueisv90KX1TUW87okh4UAHaDf?cb=ucfimg2&ucfimg=1&rs=1&pid=ImgDetMain&o=7&rm=3" alt="Catemaco" onerror="this.style.display='none'">
+                </div>
+                <div class="card-content">
+                    <h3>🌙 Catemaco y la Laguna</h3>
+                    <div class="card-meta">
+                        <span>✨ Místico</span>
+                        <span>🚤 Lancha</span>
+                    </div>
+                    <p>Pueblo rodeado de naturaleza selvática y famoso por su laguna. Ambiente místico con paseos en lancha para ver la Isla de los Monos.</p>
+                    <a href="https://www.google.com.mx/maps/place/Catemaco/@18.4116416,-95.1227845,14z/data=!3m1!4b1!4m6!3m5!1s0x85be16f125a3311f:0xb338a8e102f9024!8m2!3d18.4239855!4d-95.1093952!16zL20vMDdmMjFq?entry=ttu" target="_blank" class="card-button">Ver en Mapa</a>
+                </div>
+            </div>
+
+            <!-- Xalapa -->
+            <div class="card" onclick="window.open('https://www.google.com.mx/maps/place/Xalapa,+Ver./@19.5398606,-96.9405615,13z/data=!3m1!4b1!4m6!3m5!1s0x85db32766f7af209:0x49ecb138e6e8e892!8m2!3d19.5434778!4d-96.9102432!16zL20vMGQzMzFf?entry=ttu', '_blank')">
+                <div class="card-image">
+                    <img src="https://tse3.mm.bing.net/th/id/OIP.hBwSu72bvgzwakTG2SZbyQHaE8?cb=ucfimg2&ucfimg=1&rs=1&pid=ImgDetMain&o=7&rm=3" alt="Xalapa" onerror="this.style.display='none'">
+                </div>
+                <div class="card-content">
+                    <h3>🏛️ Xalapa (Capital)</h3>
+                    <div class="card-meta">
+                        <span>🎭 Cultural</span>
+                        <span>🌳 Montañas</span>
+                    </div>
+                    <p>La "Atenas veracruzana". Ciudad cultural con clima fresco, rodeada de montañas. Destaca su Jardín Botánico y el Museo de Antropología.</p>
+                    <a href="https://www.google.com.mx/maps/place/Xalapa,+Ver./@19.5398606,-96.9405615,13z/data=!3m1!4b1!4m6!3m5!1s0x85db32766f7af209:0x49ecb138e6e8e892!8m2!3d19.5434778!4d-96.9102432!16zL20vMGQzMzFf?entry=ttu" target="_blank" class="card-button">Ver en Mapa</a>
+                </div>
+            </div>
+
+            <!-- Río Filobobos -->
+            <div class="card" onclick="window.open('https://www.google.com.mx/maps/place/R%C3%ADo+Filobobos/@20.0631346,-97.1066551,11z/data=!4m6!3m5!1s0x85d85ec66c813f57:0x5105658826d97c6d!8m2!3d20.0631346!4d-97.1066551!16s%2Fg%2F11b6x5w97l?entry=ttu', '_blank')">
+                <div class="card-image">
+                    <img src="https://tse1.mm.bing.net/th/id/OIP.LAnLjC9wFffJE1aqVHR9GwHaFj?cb=ucfimg2&ucfimg=1&rs=1&pid=ImgDetMain&o=7&rm=3" alt="Río Filobobos" onerror="this.style.display='none'">
+                </div>
+                <div class="card-content">
+                    <h3>🛶 Río Filobobos</h3>
+                    <div class="card-meta">
+                        <span>⛵ Rafting</span>
+                        <span>🎢 Aventura</span>
+                    </div>
+                    <p>Famoso por ser uno de los mejores lugares en México para hacer rafting y actividades de aventura. Río y paisaje espectacular.</p>
+                    <a href="https://www.google.com.mx/maps/place/R%C3%ADo+Filobobos/@20.0631346,-97.1066551,11z/data=!4m6!3m5!1s0x85d85ec66c813f57:0x5105658826d97c6d!8m2!3d20.0631346!4d-97.1066551!16s%2Fg%2F11b6x5w97l?entry=ttu" target="_blank" class="card-button">Ver en Mapa</a>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="footer-menu">
+        <a href="{% url 'nucleo:principal' %}">📍 Inicio</a>
+        <a href="https://www.google.com/maps" target="_blank">🗺️ Google Maps</a>
+        <a href="{% url 'nucleo:usuarios_list' %}">👥 Usuarios</a>
+        <a href="{% url 'nucleo:ajustes' %}">⚙️ Configuración</a>
+    </div>
+</div>
+
+<script>
+    // Funcionalidad de búsqueda y filtrado (opcional para expansión futura)
+    function buscarLugares(query) {
+        const cards = document.querySelectorAll('.card');
+        query = query.toLowerCase();
+        
+        cards.forEach(card => {
+            const texto = card.textContent.toLowerCase();
+            if (texto.includes(query)) {
+                card.style.display = '';
+            } else {
+                card.style.display = 'none';
+            }
+        });
+    }
+</script>
+
+</body>
+</html>
